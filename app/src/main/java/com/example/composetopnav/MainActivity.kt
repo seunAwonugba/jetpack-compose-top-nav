@@ -1,14 +1,20 @@
 package com.example.composetopnav
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.composetopnav.ui.theme.ComposeTopNavTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -101,8 +107,54 @@ fun MySwipingTab() {
 
 @Composable
 private fun OpenRequestFragment() {
-    Column {
-        Text(text = "Hello open request fragment")
+    Surface(modifier = Modifier.padding(16.dp,8.dp)) {
+        Column {
+            MySearchView()
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = "Hello open request fragment")
+        }
+        
+    }
+}
+
+@Composable
+fun MySearchView(
+    onSearch : (String) -> Unit = {}
+){
+    var text by remember {
+        mutableStateOf("")
+    }
+
+    Box(modifier = Modifier.fillMaxWidth()){
+        OutlinedTextField(value = text, onValueChange ={
+            text = it
+            //trigger your onSearch function with the new string
+            onSearch(it)
+        },
+            placeholder = {
+                Text(text = "Search Requests")
+            },
+            label = {
+                Text(text = "Search Requests")
+            },
+            maxLines = 1,
+            singleLine = true,
+            modifier = Modifier
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Search
+            ),
+            leadingIcon = {
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(Icons.Default.Search, contentDescription = "Search" )
+                    
+                }
+            },
+            keyboardActions = KeyboardActions(
+                onSearch = { Log.d("SEARCH_CLICK", "Search icon on keyboard clicked")}
+            )
+        )
     }
 }
 
