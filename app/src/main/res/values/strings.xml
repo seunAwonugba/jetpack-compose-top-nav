@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ComposeTopNav</string>
+    <string name="price">Price: </string>
+    <string name="target">Target: </string>
+    <string name="complected">Complected: </string>
+    <string name="condition">Condition: </string>
+    <string name="add_car">Add Car</string>
 </resources>

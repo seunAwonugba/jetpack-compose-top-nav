@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import com.example.composetopnav.listitem.CarListItem
+import com.example.composetopnav.repository.MyCarRepository
 import com.example.composetopnav.ui.theme.ComposeTopNavTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -107,11 +111,19 @@ fun MySwipingTab() {
 
 @Composable
 private fun OpenRequestFragment() {
+
+    val myCarRepository = MyCarRepository()
+    val getAllCars = myCarRepository.getAllCars()
+
     Surface(modifier = Modifier.padding(16.dp,8.dp)) {
         Column {
             MySearchView()
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Hello open request fragment")
+            LazyColumn {
+                items(items = getAllCars){
+                    CarListItem(myCar = it)
+                }
+            }
         }
         
     }
